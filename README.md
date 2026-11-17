@@ -43,7 +43,7 @@ Windows executables inside. See
 
 ## Gameplay video
 
-[![Metroid Prime 3 PC port - static recompilation - beta 0.1.5 (YouTube)](https://img.youtube.com/vi/s8OuQFOtdWc/maxresdefault.jpg)](https://www.youtube.com/watch?v=s8OuQFOtdWc)
+[![Corruption_3 PC - Metroid Prime 3 PC port - demonstration video (YouTube)](https://img.youtube.com/vi/51MaZggHUSE/maxresdefault.jpg)](https://www.youtube.com/watch?v=51MaZggHUSE)
 
 *Metroid Prime 3 PC port - static recompilation - beta 0.1.5*: gameplay with keyboard and mouse. Click the image to
 watch it on YouTube.
