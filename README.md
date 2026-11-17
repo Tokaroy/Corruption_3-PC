@@ -289,8 +289,50 @@ Nothing personal is collected: you can open every file in the zip before posting
 - **Video**: aspect ratio (16:9, 4:3, or ultrawide: match the monitor, 21:9 or 32:9, which widens the view to the sides and keeps the HUD in the 16:9 area; pre-rendered videos stay 16:9), internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), frame interpolation to 120/180 Hz (off by default).
 - **Controls**: key and gamepad bindings, mouse look sensitivity and smoothing, keyboard icons in game prompts, hide cursor, always-full Wii Remote battery.
 - **Audio**: volume, stereo / Pro Logic II / mono, high-quality resampler.
+- **Language**: the game's text in English, Spanish, French, German or Italian, from the USA disc (restart to apply).
+  See [Game language](#game-language-english-spanish-french-german-or-italian).
 - **Performance**: GPU thread, disc reads on their own thread, texture decoding on several cores, shader waiting policy, and the experimental *ubershader* (see below). The game logic always runs at 60 Hz, like the console.
 - **Effects** and **Materials**: see [Image effects](#image-effects-f1--effects). Materials has the options for Samus out of the suit, the gunship and Gandrayda's frost.
+
+## Game language: English, Spanish, French, German or Italian
+
+**You do not need a PAL (European) disc to play in another language.** The USA discs, *Metroid Prime 3: Corruption*
+and *Metroid Prime Trilogy*, already contain the game's text in English, Spanish, French, German and Italian. On a
+USA Wii the game only ever shows English; the port lets you choose. It works the same with the Trilogy add-on: the
+Trilogy menu and its Metroid Prime 3 follow the same setting.
+
+<p align="center">
+  <img src="docs/media/f1-language.jpg" alt="F1 > Language: choosing the game language" width="620">
+</p>
+
+1. Press **F1** and open the **Language** tab.
+2. Choose the language in **Game language**: *English*, *Español*, *Français*, *Deutsch* or *Italiano*. It is saved
+   right away (`[prime] language` in `UserData/Config.toml`).
+3. **Close the game and start it again.** The language is read when the game starts: the tab shows the language in use
+   and reminds you to restart after a change.
+
+It covers the menus, messages, the HUD, scans and the logbook. Your save is not affected: the same save works in every
+language. A few system notices (the disc and Nunchuk warnings) stay in English.
+
+### Improved translations
+
+The translated text of the USA discs has mistakes of its own, which the port corrects as the game shows it. Your disc
+is never modified, and no European disc is needed or read.
+
+- **Spanish:** reviewed in full against the English text. Fixed: phrases that had been left in English, hints and scans
+  that said the opposite of the English one, scans showing another scan's text, entries with the wrong title, and
+  about 150 typos. Names are unified with the Spanish revised by Nintendo for Trilogy (for example *Visor de Rayos X*,
+  *Visor de Órdenes* and *Omega Ridley*), and a few expressions were adapted so they read naturally.
+- **German, French and Italian:** phrases left in English (in Italian, for example, two logbook entries and the save
+  notice at the end of the game), around 200 typos across the three languages, wrong button icons and a missing text
+  tag.
+- **Metroid Prime Trilogy (USA):** its menu was almost entirely in English in the other four languages (buttons,
+  galleries, the soundtrack titles, save slots, parental control); it is now translated. So are 13 scans that only
+  exist in Trilogy and a few notices in its Metroid Prime 3.
+- **Motion prompts** that describe a Wii Remote or Nunchuk gesture name your key or gamepad button instead, in every
+  language, with keyboard and mouse or a gamepad.
+
+If you find a mistake that is still there, press F12 where you see it and post the report, saying what it should say.
 
 ## Lower-end PCs: what to turn off first
 

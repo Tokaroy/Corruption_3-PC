@@ -116,6 +116,9 @@ the two Trilogy executables (about 90 MB on Windows): extract it into the folder
 - Documented the `game` folder and Proton/Wine paths in `docs/troubleshooting.md`.
 
 ### Text and languages
+- **New: choose the game language in F1 > Language**: English, Spanish, French, German or Italian, then restart the
+  game. The USA discs already contain all five; no PAL disc is needed. Works with the Trilogy add-on too. See
+  *Game language* in the README.
 - **Corrected translations of the USA disc** in German, French, Spanish and Italian: phrases that were left in English
   (in Trilogy, almost the whole menu), around 200 typos, wrong button icons and a missing tag. The Spanish text was
   reviewed in full against English: hints and scans that said the opposite, scans showing another scan's text, names
