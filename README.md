@@ -223,6 +223,27 @@ figure does not include the removed pointer smoothing or the images that used to
 the real difference you feel is larger. The rest is the game itself: it reads the controller at the start of a frame
 and shows the result about one frame later, exactly like the console, at 60 Hz.
 
+### Mouse too fast or too twitchy? Sensitivity and smoothing
+
+If aiming feels too sensitive, or the view jumps when you only meant to correct your aim a little, adjust these in
+**F1 > Controls** (they apply right away, so you can try them while you aim):
+
+- **Mouse sensitivity**: how far the view turns for each pixel the mouse moves, from 0.02 to 1.00 degrees per pixel
+  (default 0.20). Lower it to turn less per movement: precise shots get easier, and big turns need a longer swipe.
+- **Mouse smoothing**: spreads each movement over a few frames, from 0 (none) to 0.90 (default 0.01, almost none).
+  A little smoothing, for example 0.2 to 0.4, takes the jitter out of small corrections and makes tracking a target
+  calmer. The higher the value, the softer and slightly more delayed the view feels, so raise it only until it is
+  comfortable.
+- **Invert the mouse's vertical axis**, if you prefer moving the mouse forward to look down.
+
+Also worth knowing:
+
+- The game has its own sensitivity setting in its options menu (Basic, Standard or Advanced), which sets how fast the
+  view may turn at most. If fast swipes feel capped, choose a higher level there; if everything feels too fast, lower the port's *Mouse sensitivity* first.
+- A lower DPI on the mouse itself (in its software or with its DPI button) also makes small movements finer.
+- Mouse look only works while you aim in first person without a lock-on. In menus, on the map, in Morph Ball and in
+  cut-scenes the mouse moves the pointer as usual, and those sliders do not apply there.
+
 ### Hotkeys
 
 | Key | Action |
