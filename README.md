@@ -37,7 +37,7 @@ wall reflections, anisotropic filtering and MSAA on top of the original look.
 
 **No game assets are included.** You need your own dump of the disc. See [Legal](#legal).
 
-**Antivirus:** VirusTotal shows no detection on any v0.1.7 download, and one low machine-learning score on two of the
+**Antivirus:** VirusTotal shows no detection on any v0.1.7 download, and one low machine-learning score on the three
 Windows executables inside. See
 [Antivirus warnings](#antivirus-warnings).
 
@@ -369,8 +369,8 @@ Every release is scanned with VirusTotal, and the public reports are linked in i
 may also warn you, because the executable is not signed and each release is a new file.
 
 **v0.1.7:** none of the 61 to 66 engines flags any of the four downloads (both Windows zips and both Linux archives),
-and none of the 54 that analysed the Linux executable flags it. On Windows, 1 of the 69 engines that analysed
-`Corruption_3 PC.exe` and `Corruption_3 Trilogy Menu.exe` flags each of them: **Trapmine**, with the label
+and none of the 54 that analysed the Linux executable flags it. On Windows, 1 of the 69 or 70 engines that analysed
+`Corruption_3 PC.exe`, `Corruption_3 Trilogy Menu.exe` and `Corruption_3 Trilogy MP3.exe` flags each of them: **Trapmine**, with the label
 `suspicious.low.ml.score`, its lowest level. The other 68, including Kaspersky, Bitdefender, Malwarebytes, Microsoft and
 ESET, report nothing. I consider it a false positive, although a scan alone cannot prove that. These are my reasons:
 
