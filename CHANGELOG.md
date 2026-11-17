@@ -5,7 +5,7 @@ Versions follow `MAJOR.MINOR.PATCH`. Each release on GitHub is tagged `vMAJOR.MI
 (`-linux-x86_64.tar.gz`) and, for each platform, the optional Metroid Prime Trilogy add-on of the same version. The version is also shown at the bottom of the
 F1 panel and in the executable's file properties.
 
-## v0.1.7 - 2026-11-17 - Linux version, Metroid Prime Trilogy (USA), 120 FPS and ultrawide (experimental)
+## v0.1.7 - 2026-11-17 - Linux version, Metroid Prime Trilogy (USA), native 120 FPS and ultrawide (experimental)
 
 This is the biggest update so far. The two headline additions are a **native Linux version** and support for the
 **Metroid Prime 3 of *Metroid Prime Trilogy* (USA)**. Both platforms get every improvement below.
@@ -58,12 +58,23 @@ the two Trilogy executables (about 90 MB on Windows): extract it into the folder
   download; picking a Trilogy disc without the add-on says what is missing and lets you choose another image.
   F1 > Info shows whether the add-on is installed, and the update notice reminds you to update it too.
 
-### Experimental: frame rate above 60 (120 FPS)
-- *F1 > Video > Frame rate above 60 (interpolated)* shows extra images between the game's own frames, for 120 Hz and
-  faster monitors. The game itself keeps running at its normal speed: only the presentation is smoother.
-- **Still experimental and not fully tested: expect visual errors** in some scenes. It is off by default, adds some
-  input latency and needs more CPU and GPU. It is a good step towards playing at high frame rates, and feedback with
-  F12 reports is very welcome.
+### Experimental: native 120 FPS
+- *F1 > Video > Native 120 frames per second (experimental, applies at restart)* makes **the game itself run and draw
+  120 real frames per second**, still at the console's speed: real motion and quicker response at 120, not inserted
+  images. Needs a 120 Hz monitor and a PC that can hold about 120 frames, since the game does twice the work (two
+  logic steps and two drawn frames for each console frame), mostly on the CPU. When the PC cannot keep up, the game
+  keeps its speed but motion becomes uneven. Also `[video] native_120fps` in `Config.toml`.
+- **Known problems:** some parts of the game advance once per drawn frame instead of by time, so at 120 they run
+  twice as fast: some menu and helmet (HUD) animations and icons, and possibly other effects not found yet. Expect
+  other unwanted results too. RetroAchievements and the interpolated frame rate are off while it runs.
+- This is the high frame rate mode that will keep being improved: reports (F12) of anything that runs too fast or
+  looks wrong at native 120 are very welcome.
+
+### Experimental: interpolated frame rate above 60
+- *F1 > Video > Frame rate above 60 (interpolated)* keeps the game at its normal 59.94 frames per second and shows
+  extra in-between images when presenting, for 120 Hz and faster monitors. Game logic, speed and RetroAchievements
+  are unchanged, but it costs **more GPU** (every extra image), adds some input latency and can show visual errors
+  in some scenes. Meant for PCs that cannot hold native 120. Off by default.
 - Improved in this version: the green console screens of the gunship no longer flicker when you turn the camera,
   and characters in fast turns during cut-scenes should no longer break apart (not yet checked in every scene).
   On Linux with NVIDIA under X11, turning V-Sync on limits it to 60.

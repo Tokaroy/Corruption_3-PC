@@ -33,7 +33,7 @@ wall reflections, anisotropic filtering and MSAA on top of the original look.
 
 > **🐧 New in v0.1.7: Linux and Metroid Prime Trilogy.** A native Linux x86_64 version (Vulkan, X11 and Wayland) and
 > an optional add-on that runs the Metroid Prime 3 of *Metroid Prime Trilogy* (USA). Also new and experimental:
-> 120 FPS (interpolated) and ultrawide / super-wide. See the [changelog](CHANGELOG.md).
+> native 120 FPS, an interpolated frame rate above 60, and ultrawide / super-wide. See the [changelog](CHANGELOG.md).
 
 **No game assets are included.** You need your own dump of the disc. See [Legal](#legal).
 
@@ -307,13 +307,38 @@ Nothing personal is collected: you can open every file in the zip before posting
 
 ## Options worth knowing (F1)
 
-- **Video**: aspect ratio (16:9, 4:3, or ultrawide: match the monitor, 21:9 or 32:9, which widens the view to the sides and keeps the HUD in the 16:9 area; pre-rendered videos stay 16:9), internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), frame interpolation to 120/180 Hz (off by default), custom textures and texture dumping (see [Custom textures](#custom-textures-and-hd-texture-packs)).
+- **Video**: aspect ratio (16:9, 4:3, or ultrawide: match the monitor, 21:9 or 32:9, which widens the view to the sides and keeps the HUD in the 16:9 area; pre-rendered videos stay 16:9), internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), native 120 FPS and frame interpolation to 120/180 Hz (both experimental and off by default, see [High frame rates](#high-frame-rates-native-120-fps-and-interpolated-both-experimental)), custom textures and texture dumping (see [Custom textures](#custom-textures-and-hd-texture-packs)).
 - **Controls**: key and gamepad bindings, mouse look sensitivity and smoothing, keyboard icons in game prompts, hide cursor, always-full Wii Remote battery.
 - **Audio**: volume, stereo / Pro Logic II / mono, high-quality resampler.
 - **Language**: the game's text in English, Spanish, French, German or Italian, from the USA disc (restart to apply).
   See [Game language](#game-language-english-spanish-french-german-or-italian).
 - **Performance**: GPU thread, disc reads on their own thread, texture decoding on several cores, shader waiting policy, and the experimental *ubershader* (see below). The game logic always runs at 60 Hz, like the console.
 - **Effects** and **Materials**: see [Image effects](#image-effects-f1--effects). Materials has the options for Samus out of the suit, the gunship and Gandrayda's frost.
+
+## High frame rates: native 120 FPS and interpolated (both experimental)
+
+There are two different ways to go above 60 frames per second, both in **F1 > Video** and both off by default. Use one
+or the other, never both: native 120 turns the interpolated one off while it runs.
+
+| | Native 120 FPS | Frame rate above 60 (interpolated) |
+| --- | --- | --- |
+| What it does | The game itself runs and draws 120 real frames per second, at the console's speed | The game stays at 59.94 frames per second; extra in-between images are shown |
+| Motion and response | Real 120: quicker response to the mouse | Smoother picture, a little more input latency |
+| Main cost | CPU (twice the game's work), and twice the frames to draw | GPU (every extra image) |
+| RetroAchievements | Off while it runs | Available |
+| Applies | At the next start | Right away |
+| Known problems | Some menu and helmet (HUD) animations and icons run twice as fast; other per-frame effects may too | Visual errors in some scenes |
+
+**Native 120** (*Native 120 frames per second (experimental, applies at restart)*, `[video] native_120fps`) needs a
+120 Hz monitor and a PC that holds about 120 frames. When the PC cannot keep up, the game keeps its speed but motion
+becomes uneven. Some parts of the game advance once per drawn frame instead of by time, so they run twice as fast at
+120: so far some menu and helmet animations and icons. Expect other unwanted results as well. **This is the mode that
+will keep being improved**: an F12 report of anything that runs too fast or looks wrong at native 120, saying where
+it happened, helps the most.
+
+**Interpolated** (*Frame rate above 60 (interpolated)*) is for PCs that cannot hold native 120: the game logic is
+untouched and only the presentation inserts images, at the cost of more GPU and some latency. V-Sync is not needed
+with native 120 (frames already follow the monitor) and only adds latency.
 
 ## Game language: English, Spanish, French, German or Italian
 
@@ -370,7 +395,8 @@ and check the FPS counter (F1 > Video > Show FPS) after each step. Everything ap
 3. **F1 > Video**: a lower *Internal resolution* saves the most on a weak GPU; keep *Antialiasing* off and lower
    *Anisotropic filtering*. *Per-pixel lighting*, *Enhanced metal* and *Enhanced materials* can go off too: the
    lighting and metal then look as in the original.
-4. Keep the experimental options off: *Frame rate above 60 (interpolated)* (it needs CPU and GPU for every extra image),
+4. Keep the experimental options off: *Native 120 frames per second* (twice the game's work, mostly CPU), *Frame rate
+   above 60 (interpolated)* (more GPU for every extra image),
    *Modern lighting* and *Light shafts* (all off by default).
 
 With all of the above off you get the original look of the game at your monitor's resolution, which needs far less
