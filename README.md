@@ -307,7 +307,7 @@ Nothing personal is collected: you can open every file in the zip before posting
 
 ## Options worth knowing (F1)
 
-- **Video**: aspect ratio (16:9, 4:3, or ultrawide: match the monitor, 21:9 or 32:9, which widens the view to the sides and keeps the HUD in the 16:9 area; pre-rendered videos stay 16:9), internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), frame interpolation to 120/180 Hz (off by default).
+- **Video**: aspect ratio (16:9, 4:3, or ultrawide: match the monitor, 21:9 or 32:9, which widens the view to the sides and keeps the HUD in the 16:9 area; pre-rendered videos stay 16:9), internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), frame interpolation to 120/180 Hz (off by default), custom textures and texture dumping (see [Custom textures](#custom-textures-and-hd-texture-packs)).
 - **Controls**: key and gamepad bindings, mouse look sensitivity and smoothing, keyboard icons in game prompts, hide cursor, always-full Wii Remote battery.
 - **Audio**: volume, stereo / Pro Logic II / mono, high-quality resampler.
 - **Language**: the game's text in English, Spanish, French, German or Italian, from the USA disc (restart to apply).
@@ -425,6 +425,34 @@ Two ways to tune the look:
 
 Effects are post-processing: they cannot add texture detail, and heavy ReShade shaders cost frame time. If you report a
 visual glitch, say whether any effect or ReShade was active (the F12 report records your settings).
+
+## Custom textures and HD texture packs
+
+**HD texture packs made for Dolphin work in the port without conversion.** The port reads replacement textures with
+Dolphin's file names (`tex1_<width>x<height>_<hash>_<format>.png` or `.dds`), so a pack for *Metroid Prime 3* or
+*Metroid Prime Trilogy* can be used as it is ([confirmed by a player](https://github.com/bonllavier/Corruption_3-PC/issues/14)).
+This project does not provide or link packs.
+
+1. Close the game.
+2. Copy the pack's files (usually the contents of its `Load/Textures/RM3E01` or `R3ME01` folder; subfolders are
+   fine) into `UserData/texture_replacements/`, next to the port's own folders (`strap_screen`, and
+   `keyboard_icons` or `variants` if you use key or gamepad icons), which must stay.
+3. Start the game.
+
+Good to know:
+
+- The first start with a big pack, and the first visit to each area, are slower: each image is read and decoded the
+  first time its texture appears. There is no preloading or progress bar yet. **DDS packs (BC7/BC1/BC3) load much
+  faster than PNG** and use less video memory.
+- A pack only replaces the textures whose hash matches your disc (Corruption `RM3E01` or Trilogy `R3ME01`); the rest
+  stay original.
+- In v0.1.7 custom textures are active whether or not *F1 > Video > Custom textures* is ticked. To play without a
+  pack, move its folder out of `texture_replacements`.
+- *F1 > Video > Dump game textures* (with *Custom textures* ticked, restart) writes every texture without a replacement
+  to `UserData/Cache/texture_dumps`, already named the way its replacement must be, for checking a pack or making your own.
+
+Full guide: supported formats, mipmaps, dumping, load times and problems in
+[docs/custom_textures.md](docs/custom_textures.md).
 
 ## Antivirus warnings
 

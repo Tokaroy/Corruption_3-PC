@@ -106,6 +106,10 @@ F1 > Controls > *Wii Remote battery always full* (on by default) answers the gam
 Shaders for that material are still compiling. It resolves by itself within a second or two; the shared shader cache
 grows with every release.
 
+**A texture pack makes the first start slow, or the game hitches in new rooms**
+Each replacement image is read the first time its texture appears; there is no preloading yet. DDS packs load much
+faster than PNG. A pack that changes nothing is probably for another disc. See [custom_textures.md](custom_textures.md).
+
 ## Where things are
 
 Everything lives next to the executable (portable layout):
@@ -117,7 +121,7 @@ Everything lives next to the executable (portable layout):
 | `UserData/Logs/` | One folder per run with the console log and crash files |
 | `UserData/Reports/` | F12 bug reports |
 | `UserData/Cache/` | Shader and pipeline caches; safe to delete |
-| `UserData/texture_replacements/` | Custom textures (Dolphin naming) and the generated keyboard icons |
+| `UserData/texture_replacements/` | Custom textures and HD texture packs (Dolphin naming, see [custom_textures.md](custom_textures.md)), the port's start-up screens and the generated keyboard icons |
 
 ## Updating
 
