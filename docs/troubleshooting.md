@@ -39,12 +39,56 @@ are reproduced from the area name alone, so no further files are needed.
 ## Common issues
 
 **The game asks for the disc image at every start, or says it was not found**
-The chosen path is stored as `iso_path` under `[paths]` in `UserData/Config.toml`. If the file was moved, pick it again
-in the dialog or in **F1 > Diagnostics > Select disc image**. Supported: `.iso`, `.rvz`, `.wbfs`, `.gcz`, `.wia`, `.ciso`.
+The chosen path is stored as `iso_path` under `[paths]` in `UserData/Config.toml`, and only once the image has opened.
+If the file was moved, pick it again in the dialog or in **F1 > Diagnostics** (*Select disc image*, or paste the full
+path into the box and press *Use this path*). Supported: `.iso` and `.rvz` only; any other file is refused with a message. Dolphin converts a dump to either
+(right-click the game > *Convert File* > RVZ or ISO).
 
-**"The disc image is not Metroid Prime 3: Corruption (USA)"**
-Only the USA disc, game ID `RM3E01`, revision 0, is supported. PAL and Japanese discs, and the *Metroid Prime Trilogy*
-disc, have different code and will not work.
+Ways to never see the dialog:
+- **`game` folder:** put the dump in a folder named `game` next to the executable. The first disc image found there
+  (alphabetically) is used whenever `iso_path` is empty, or names a file that no longer exists.
+- **Command line:** `"Corruption_3 PC.exe" --iso "D:\Games\Metroid Prime 3 - Corruption (USA).rvz"` (also
+  `--iso=<path>`). It applies to that start only and is not saved.
+- **Environment variable:** `CORRUPTION3_ISO=<path>`, read once at start. Same rules as `--iso`.
+
+`--iso` and `CORRUPTION3_ISO` win over `iso_path`. Set `CORRUPTION3_NO_DISC_DIALOG=1` to stop with the error message
+instead of opening the file dialog (for unattended runs).
+
+The error says which check failed: no image configured, a path that cannot be used (a moved file, a folder, a shell
+location), a file that is not a readable Wii disc image, or the wrong game.
+
+**Running through Proton or Wine (Linux): the disc image is asked at every start even after picking it**
+Older builds (v0.1.6 and before) could save a "shell location" from the file dialog instead of a real path when the
+dump was reached through *This PC* or its shortcuts, for example
+`::{20d04fe0-3aea-1069-a2d8-08002b30309d}\Metroid Prime 3`. That value has no drive letter and no extension, so it
+never opens. Newer builds use a dialog that only returns real files, refuse such values, and fall back to the `game`
+folder. On any version, you can fix it by writing the real path into `UserData/Config.toml`. Under Proton or Wine, `Z:`
+is the Linux root, and either `/` or `\\` works as separator; include the extension:
+
+```toml
+[paths]
+iso_path = "Z:/home/you/Dumps/Metroid Prime 3 - Corruption (USA).rvz"
+```
+
+Alternatives: the `game` folder next to the executable (a symbolic link to the dump works under Proton), or `--iso` /
+`CORRUPTION3_ISO` in the launcher's command line or environment. Thanks to cheurteen for the diagnosis and the
+original version of this entry.
+
+**"This disc image is not one the port runs"**
+Two USA discs are supported: *Metroid Prime 3: Corruption*, game ID `RM3E01`, revision 0, and *Metroid Prime
+Trilogy*, game ID `R3ME01` (Metroid Prime 3 only). The message names the game ID it found, for example
+`Found RM3P01 - Metroid Prime 3: Corruption (Europe)`. PAL and Japanese discs, including the European Trilogy
+(`R3MP01`), run different game code and will not work. With the Trilogy disc, `Corruption_3 PC.exe` starts
+`Corruption_3 Trilogy Menu.exe` and `Corruption_3 Trilogy MP3.exe`, from the Trilogy add-on, which must be in the same folder. The USA disc includes English, Spanish, French, German and Italian (F1 > Language).
+
+**"This disc is Metroid Prime Trilogy (USA). Playing its Metroid Prime 3 needs the Trilogy add-on"**
+The Trilogy executables are a separate download. Get `Corruption_3-PC-vX.Y.Z-Trilogy-addon-win64.zip` of the same
+version as your `Corruption_3 PC.exe` (F1 > Info shows it) from the release page and unzip it into the game folder.
+The message names the file that is missing. To play Corruption instead, pick its disc image in the same dialog.
+
+**"The Metroid Prime Trilogy add-on in this folder is vX, but Corruption_3 PC is vY"**
+The two archives come from different releases. Download the add-on of the version the message names and unzip it
+over the folder (or update Corruption_3 PC to the add-on's version). Both always have to be the same version.
 
 **"Unsupported Processor"**
 The port is built for x86-64-v3 (AVX2). Intel Core 4th generation (Haswell, 2013) or newer, AMD Excavator (2015) or newer.

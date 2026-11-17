@@ -1,8 +1,142 @@
 # Changelog
 
 Versions follow `MAJOR.MINOR.PATCH`. Each release on GitHub is tagged `vMAJOR.MINOR.PATCH` and ships
-`Corruption_3-PC-vMAJOR.MINOR.PATCH-win64.zip` with its SHA-256. The version is also shown at the bottom of the
+`Corruption_3-PC-vMAJOR.MINOR.PATCH-win64.zip` with its SHA-256. From v0.1.7 there is also a Linux archive
+(`-linux-x86_64.tar.gz`) and, for each platform, the optional Metroid Prime Trilogy add-on of the same version. The version is also shown at the bottom of the
 F1 panel and in the executable's file properties.
+
+## v0.1.7 - 2026-11-17 - Linux version, Metroid Prime Trilogy (USA), 120 FPS and ultrawide (experimental)
+
+This is the biggest update so far. The two headline additions are a **native Linux version** and support for the
+**Metroid Prime 3 of *Metroid Prime Trilogy* (USA)**. Both platforms get every improvement below.
+
+### Downloads
+
+Each release now has a main archive and an optional Trilogy add-on, for Windows and for Linux, all of the same version:
+
+| | Main archive: Metroid Prime 3: Corruption (USA) | Optional add-on: Metroid Prime Trilogy (USA) |
+|---|---|---|
+| Windows | `Corruption_3-PC-v0.1.7-win64.zip` | `Corruption_3-PC-v0.1.7-Trilogy-addon-win64.zip` |
+| Linux x86_64 | `Corruption_3-PC-v0.1.7-linux-x86_64.tar.gz` | `Corruption_3-PC-v0.1.7-Trilogy-addon-linux-x86_64.tar.gz` |
+
+If you only play Corruption, the main archive is all you need, about the same size as before. The add-on holds only
+the two Trilogy executables (about 90 MB on Windows): extract it into the folder of the main archive.
+
+### New: Linux version
+- **Corruption_3 PC now runs natively on Linux x86_64**: the same recompiled game code, options and save handling as
+  on Windows, built for Linux, with Vulkan graphics and SDL3. It reads your own `.iso` or `.rvz` at run time, as on
+  Windows. No Wine or Proton needed.
+- Tested at a steady 60 FPS on Ubuntu 22.04 (X11, NVIDIA RTX 3050, i7-4790), including a new game from the start, with
+  sound.
+- Requirements: a 64-bit distribution with glibc 2.35 or newer (for example Ubuntu 22.04, Debian 12, Fedora 36 or
+  later), a GPU with a Vulkan driver, and PipeWire, PulseAudio or ALSA for sound. X11 and Wayland both work.
+- Extract the archive, keep the folder together and run `./"Corruption_3 PC"` from it. libpng is bundled; everything
+  else comes from the system. `README - Linux.txt` in the archive has the details.
+- The first start compiles the shaders (several minutes, with the red notice counting them down); later starts take
+  about 15 seconds. The Vulkan pipeline cache is kept between runs.
+- Same as Windows: the port's start-up screens, the default configuration (keyboard icons, mouse look, effects), the
+  window icon, gamepad icons, F1 options, F12 bug reports, the update check, the frame rate above 60 and ultrawide.
+- Differences: only Vulkan is offered as the graphics API, MSAA goes up to 4x, ReShade is not included, and the
+  RetroAchievements login is remembered through the desktop's secret service (GNOME Keyring, KWallet).
+- Following the monitor's refresh (and the image sync and *Seen / uneven* readout) works on Linux too, measured
+  through X11 (on Mesa, XWayland and NVIDIA). Native Wayland measurement is not done yet.
+- Not tested yet by players: Wayland sessions, gamepads, RetroAchievements and bug reports on Linux. Reports are
+  welcome.
+
+### New: Metroid Prime Trilogy (USA)
+- **The Metroid Prime 3 of *Metroid Prime Trilogy* (USA, `R3ME01`) runs too, through the optional add-on.** Extract the
+  add-on into the same folder, start Corruption_3 PC as usual and pick your Trilogy `.iso` or `.rvz`. The Trilogy menu
+  opens, where your Trilogy saves are, and it starts Metroid Prime 3.
+- The menu and Metroid Prime 3 are their own executables (`Corruption_3 Trilogy Menu`, `Corruption_3 Trilogy MP3`),
+  translated from the Trilogy disc's own code, with the same options, controls and improvements as Corruption: mouse
+  look, keyboard and gamepad icons, field of view, ultrawide, lighting, game speed and the corrected translations.
+- The port's Wii Remote strap screens replace Trilogy's in every language of the disc, and the motion prompts name
+  your bound key with Trilogy's own wording.
+- Metroid Prime and Metroid Prime 2 are not part of the port: choosing them shows a notice and returns to the menu.
+  RetroAchievements are not available with this disc.
+- Both archives must be the same version. A Trilogy add-on of another version refuses to start and names the file to
+  download; picking a Trilogy disc without the add-on says what is missing and lets you choose another image.
+  F1 > Info shows whether the add-on is installed, and the update notice reminds you to update it too.
+
+### Experimental: frame rate above 60 (120 FPS)
+- *F1 > Video > Frame rate above 60 (interpolated)* shows extra images between the game's own frames, for 120 Hz and
+  faster monitors. The game itself keeps running at its normal speed: only the presentation is smoother.
+- **Still experimental and not fully tested: expect visual errors** in some scenes. It is off by default, adds some
+  input latency and needs more CPU and GPU. It is a good step towards playing at high frame rates, and feedback with
+  F12 reports is very welcome.
+- Improved in this version: the green console screens of the gunship no longer flicker when you turn the camera,
+  and characters in fast turns during cut-scenes should no longer break apart (not yet checked in every scene).
+  On Linux with NVIDIA under X11, turning V-Sync on limits it to 60.
+
+### Experimental: ultrawide and super-wide (GitHub issue #7)
+- **New in F1 > Video > Aspect ratio:** *Ultrawide: match the window / monitor*, *21:9* and *32:9* widen the 16:9 view
+  to the sides (Hor+): the vertical view stays the same, so a 21:9 or 32:9 monitor shows more of the scene instead of
+  black bars. Culling follows the wider view, so nothing pops in at the edges.
+- The helmet HUD keeps its 16:9 layout in the centre, the menu pointer lands where the menus react, and pre-rendered
+  videos are shown at 16:9. On a 16:9 monitor, *match the window* looks exactly like *Widescreen 16:9*.
+- Also `[video] aspect_ratio` in `Config.toml` (`"16:9"`, `"window"`, `"21:9"`, `"32:9"`, or a ratio such as `"2.39"` or
+  `"3440x1440"`). Changes apply right away. Experimental: some menus, maps and visors have not been checked at every
+  ratio yet.
+
+### Better bug reports (F12)
+- `system.txt` now records much more to diagnose a problem: the disc image format and size, how long the session
+  ran, earlier runs, the graphics adapter, driver and backend in use, whether the shader cache was cold or warm and
+  how many times it had been used, the shader generation status and timing, pipelines created, queued and failed,
+  draws skipped, and whether the Trilogy add-on is installed.
+- The log names the version and platform at the top, adds a timed status line every 10 seconds and reports skipped
+  draws and failed shaders, so dark or missing scenes can be traced.
+- A red notice now shows while the shaders of a new install are generated, with how many are left: wait for it
+  before starting a game (from a report of a dark scene after starting to play during the first compilation).
+
+### Game speed and frame pacing
+- **The game now runs at the console's own rate, 59.94 frames per second** (60000/1001), instead of 60.000, which was
+  0.1 % fast. When your monitor runs at 60 or 120 Hz, frames follow its refresh and the game's time step is adjusted by
+  the same tiny amount, so the game speed is the console's on any monitor and in any window mode, on Windows and
+  Linux, and with the Trilogy disc too.
+- **New: V-Sync option** in F1 > Video (Windows and Linux).
+
+### Disc image selection (GitHub discussions #4 and #5, thanks to cheurteen)
+- **Fixed: under Proton/Wine the disc image was asked at every start.** The file dialog could return a shell location
+  such as `::{20d04fe0-...}\Metroid Prime 3` instead of a file path, and that value was saved. The new dialog only
+  returns real files and asks for their file system path, such values are refused, and an unusable saved path falls
+  back to a dump in the `game` folder.
+- **Only `.iso` and `.rvz` disc images are accepted now**, the two formats that have been tested in game. Any other
+  file is refused with a message; Dolphin converts a dump to RVZ or ISO (right-click the game > *Convert File*).
+- **The path is saved only once the image opens.** A wrong pick is no longer stored and asked about at every start.
+- **New: `--iso "<path>"`** on the command line (or `--iso=<path>`) and the **`CORRUPTION3_ISO`** environment variable
+  name the disc image without the dialog. They apply to that start and are not written to `Config.toml`.
+  `CORRUPTION3_NO_DISC_DIALOG=1` stops with the message instead of opening the dialog.
+- **New: paste a path in F1 > Diagnostics.** Type or paste the full path and press *Use this path*; quotes from
+  Explorer's *Copy as path* are removed. Both this and *Select disc image* open and check the image before saving it,
+  and the panel shows where the current image comes from.
+- **Clearer messages.** The error now says which check failed: no image, a path that cannot be used (moved file,
+  folder, shell location), a file that is not a Wii disc image, or another game. For another game it names the ID it
+  found, for example `Found RM3P01 - Metroid Prime 3: Corruption (Europe)`, and the two discs the port runs. With no
+  image configured at all, the dialog opens straight away.
+- Documented the `game` folder and Proton/Wine paths in `docs/troubleshooting.md`.
+
+### Text and languages
+- **Corrected translations of the USA disc** in German, French, Spanish and Italian: phrases that were left in English
+  (in Trilogy, almost the whole menu), around 200 typos, wrong button icons and a missing tag. The Spanish text was
+  reviewed in full against English: hints and scans that said the opposite, scans showing another scan's text, names
+  unified with the revised Spanish of Trilogy, adaptations and about 150 more typos.
+- **Wii Remote motion prompts name your key or pad button** instead of describing a Wii Remote gesture, in every
+  language, with Corruption's and Trilogy's wording.
+
+### Graphics
+- **Modern lighting, level 2**, more stable contact shadows, and crash fixes (F1 > Video). Shadows that flickered in
+  some scenes with modern lighting were fixed.
+- **Ambient occlusion (SSAO)** no longer darkens fog, explosions and particles.
+- **For lower-end PCs**, the README has a new section, *Lower-end PCs: what to turn off first*: the added effects
+  (ambient occlusion, reflections and the world lighting options) can cost as much GPU time as the game itself.
+- Slow frames are no longer thrown away: when the PC stalls for a moment (for example while shaders compile), the
+  frame is shown late instead of being replaced by an empty image.
+
+### Other fixes
+- A refused or missing disc image could leave the program running in the background after its message; it now
+  always closes.
+- Trilogy: quitting through the system menu paths now behaves as with Corruption (restart returns to the Trilogy
+  menu, as on the console).
 
 ## v0.1.6 - 2026-11-01 - World lighting, wall reflections, gamepad, FOV, achievements and smoother fights
 

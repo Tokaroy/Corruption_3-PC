@@ -2,9 +2,10 @@
   <img src="docs/media/banner.png" alt="Corruption_3 PC" width="100%">
 </p>
 
-# Corruption_3 PC - Metroid Prime 3: Corruption static recompilation (recomp) for Windows
+# Corruption_3 PC - Metroid Prime 3: Corruption static recompilation (recomp) for Windows and Linux
 
-A native Windows port of **Metroid Prime 3: Corruption** (Wii, USA), created by **bonllavier**.
+A native Windows and Linux port of **Metroid Prime 3: Corruption** (Wii, USA), created by **bonllavier**. It also runs
+the Metroid Prime 3 of **Metroid Prime Trilogy** (USA) through an optional add-on.
 The game's program code runs recompiled on your PC: no emulator, no virtual machine. You play with keyboard and mouse
 or a gamepad, at your monitor's resolution, with per-pixel lighting, enhanced materials, ambient occlusion, floor and
 wall reflections, anisotropic filtering and MSAA on top of the original look.
@@ -30,9 +31,14 @@ wall reflections, anisotropic filtering and MSAA on top of the original look.
 > **🏆 RetroAchievements built in:** earn this game's achievements directly in the port, with no emulator or extra
 > tool. They are recorded on your RetroAchievements account. See [RetroAchievements](#retroachievements).
 
+> **🐧 New in v0.1.7: Linux and Metroid Prime Trilogy.** A native Linux x86_64 version (Vulkan, X11 and Wayland) and
+> an optional add-on that runs the Metroid Prime 3 of *Metroid Prime Trilogy* (USA). Also new and experimental:
+> 120 FPS (interpolated) and ultrawide / super-wide. See the [changelog](CHANGELOG.md).
+
 **No game assets are included.** You need your own dump of the disc. See [Legal](#legal).
 
-**Antivirus:** VirusTotal shows one machine-learning detection on the v0.1.6 executable. See
+**Antivirus:** VirusTotal shows no detection on any v0.1.7 download, and one low machine-learning score on two of the
+Windows executables inside. See
 [Antivirus warnings](#antivirus-warnings).
 
 ## Gameplay video
@@ -77,20 +83,53 @@ occlusion on). No texture was replaced or upscaled: the materials are built from
 
 ## Requirements
 
-| | Minimum |
-| --- | --- |
-| OS | Windows 10 or 11, 64-bit |
-| CPU | x86-64-v3 (Intel Haswell / 4th gen or newer, AMD Excavator / Zen or newer) |
-| GPU | Direct3D 12 or Vulkan capable, up to date drivers |
-| RAM | 8 GB with the Windows page file enabled for the first launch; 16 GB recommended |
-| Game | Your own dump of *Metroid Prime 3: Corruption* (USA), game ID `RM3E01`, as `.iso`, `.rvz`, `.wbfs`, `.gcz`, `.wia` or `.ciso` |
+| | Windows | Linux |
+| --- | --- | --- |
+| OS | Windows 10 or 11, 64-bit | x86_64 distribution with glibc 2.35 or newer (Ubuntu 22.04, Debian 12, Fedora 36 or later), X11 or Wayland |
+| CPU | x86-64-v3 (Intel Haswell / 4th gen or newer, AMD Excavator / Zen or newer) | same |
+| GPU | Direct3D 12 or Vulkan capable, up to date drivers | Vulkan driver, up to date |
+| RAM | 8 GB with the Windows page file enabled for the first launch; 16 GB recommended | 8 GB with swap for the first launch; 16 GB recommended |
+| Sound | (built in) | PipeWire, PulseAudio or ALSA |
+| Game | Your own dump of *Metroid Prime 3: Corruption* (USA), game ID `RM3E01`, or of *Metroid Prime Trilogy* (USA), game ID `R3ME01` (its Metroid Prime 3 only), as `.iso` or `.rvz` (only these two are accepted: Dolphin converts a dump to either, right-click the game > *Convert File*) |
 
 ## Getting started
 
 1. Download the latest `Corruption_3-PC-vX.Y.Z-win64.zip` from the [Releases](../../releases) page and unzip it anywhere.
 2. Run **`Corruption_3 PC.exe`**. On the first start it asks for your disc image: pick the file in the dialog.
-   The path is saved in `UserData/Config.toml`, so you are asked only once (change it later in **F1 > Diagnostics > Select disc image**).
+   The path is saved in `UserData/Config.toml` once the image opens, so you are asked only once (change it later in
+   **F1 > Diagnostics**, with the dialog or by pasting the path). Two ways to skip the dialog entirely:
+   - put your dump in a folder named **`game`** next to the executable (`game/Metroid Prime 3.rvz`); it is found by
+     itself, or
+   - start the executable with **`--iso "<path to the dump>"`**, or set the **`CORRUPTION3_ISO`** environment variable to
+     that path. Useful for shortcuts, scripts and launchers; neither is written to `Config.toml`.
 3. Pick your save slot with the mouse and click. **F1** opens the options at any time.
+
+### Linux
+
+1. Download the latest `Corruption_3-PC-vX.Y.Z-linux-x86_64.tar.gz` from the [Releases](../../releases) page and extract it
+   anywhere (`tar -xzf Corruption_3-PC-vX.Y.Z-linux-x86_64.tar.gz`). Keep the folder together: it brings its own
+   libpng, everything else is a system library.
+2. Run **`./"Corruption_3 PC"`** from that folder. The disc image is chosen the same way as on Windows: the dialog on
+   the first start, the `game` folder, or `--iso "/path/to/dump.rvz"`.
+3. Everything else in this README applies too; read `Corruption_3 PC` where it says `Corruption_3 PC.exe`. On Linux
+   the graphics API is Vulkan, MSAA goes up to 4x and ReShade is not included. `README - Linux.txt` in the archive has
+   the details (RetroAchievements login storage, F12 if your desktop takes that key).
+
+### Metroid Prime Trilogy (optional add-on)
+
+To play the Metroid Prime 3 of *Metroid Prime Trilogy* (USA), also download the add-on from the **same release**:
+`Corruption_3-PC-vX.Y.Z-Trilogy-addon-win64.zip` on Windows or `Corruption_3-PC-vX.Y.Z-Trilogy-addon-linux-x86_64.tar.gz`
+on Linux, and extract it into the same folder, next to `Corruption_3 PC.exe` (on Linux:
+`tar -xzf <add-on>.tar.gz -C <your folder> --strip-components=1`). It only adds two files,
+`Corruption_3 Trilogy Menu` and `Corruption_3 Trilogy MP3` (`.exe` on Windows), which use the main folder's files,
+settings and saves. Then start `Corruption_3 PC.exe` as usual and pick
+your Trilogy disc image: the Trilogy menu opens, where your saves are, and it starts Metroid Prime 3. Metroid Prime and
+Metroid Prime 2 are not part of the port.
+
+- Both archives must be the **same version**. A Trilogy add-on of another version refuses to start and says which
+  file to download.
+- If you pick a Trilogy disc without the add-on, the disc dialog says what is missing and lets you choose another image.
+- **F1 > Info** shows whether the add-on is installed.
 
 **The first launch of a new install compiles the game's shaders in the background.** Measured on a 4-core i7-4790:
 **about 17 minutes, with memory use temporarily reaching about 9 GB** (of 16 GB installed). That memory stays in use until
@@ -101,8 +140,9 @@ executable. The disc image is only ever read, wherever it lives.
 
 ## Updating to a new version
 
-Unzip the new release **over the same folder** and overwrite when asked. The zip never contains `UserData`, so your
-saves, settings, key bindings and the remembered disc image path are kept. Nothing else is needed; only the shaders
+Unzip the new release **over the same folder** and overwrite when asked. If you use the Trilogy add-on, unzip the new
+add-on over the folder too, after the main archive (both must be the same version; the update notice reminds you).
+The zips never contain `UserData`, so your saves, settings, key bindings and the remembered disc image path are kept. Nothing else is needed; only the shaders
 that changed are compiled again on the next start.
 
 ## Controls
@@ -246,11 +286,33 @@ Nothing personal is collected: you can open every file in the zip before posting
 
 ## Options worth knowing (F1)
 
-- **Video**: internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), frame interpolation to 120/180 Hz (off by default).
+- **Video**: aspect ratio (16:9, 4:3, or ultrawide: match the monitor, 21:9 or 32:9, which widens the view to the sides and keeps the HUD in the 16:9 area; pre-rendered videos stay 16:9), internal resolution (monitor native by default), MSAA 2x/4x/8x, anisotropic filtering, first-person field of view (not available while RetroAchievements is on), per-pixel lighting, enhanced metal (modern metal material on the suit, armour and machinery; skin is left alone; on by default), enhanced materials (the same treatment for identified surfaces such as the starship hulls; on by default), console copy filter (the Wii's vertical blur, off by default), frame interpolation to 120/180 Hz (off by default).
 - **Controls**: key and gamepad bindings, mouse look sensitivity and smoothing, keyboard icons in game prompts, hide cursor, always-full Wii Remote battery.
 - **Audio**: volume, stereo / Pro Logic II / mono, high-quality resampler.
 - **Performance**: GPU thread, disc reads on their own thread, texture decoding on several cores, shader waiting policy, and the experimental *ubershader* (see below). The game logic always runs at 60 Hz, like the console.
 - **Effects** and **Materials**: see [Image effects](#image-effects-f1--effects). Materials has the options for Samus out of the suit, the gunship and Gandrayda's frost.
+
+## Lower-end PCs: what to turn off first
+
+The image effects the port adds on top of the original game cost GPU time, sometimes as much as the game itself. On
+the maintainer's PC, with GPU timing on (1 November 2026), a frame took about 5 ms of GPU on average: about 2.2 ms for
+the game and about 2.5 ms for the added effects; in the heaviest fight tested, the effects reached 9.5 ms while the
+game stayed under 5 ms. If your frame rate drops below 60, or your PC runs hot or loud, turn these off, in this order,
+and check the FPS counter (F1 > Video > Show FPS) after each step. Everything applies right away:
+
+1. **F1 > Effects > Ambient occlusion (SSAO)**: off.
+2. **F1 > Effects > World lighting (experimental)**: turn off *Floor reflections (SSR)*, *Wall reflections*,
+   *Environment material*, *Borrowed lights*, *Soft character shadows* and *Material in rooms with live lights*. The
+   walls and floors then show the game's own baked lighting, as on the Wii.
+3. **F1 > Video**: a lower *Internal resolution* saves the most on a weak GPU; keep *Antialiasing* off and lower
+   *Anisotropic filtering*. *Per-pixel lighting*, *Enhanced metal* and *Enhanced materials* can go off too: the
+   lighting and metal then look as in the original.
+4. Keep the experimental options off: *Frame rate above 60 (interpolated)* (it needs CPU and GPU for every extra image),
+   *Modern lighting* and *Light shafts* (all off by default).
+
+With all of the above off you get the original look of the game at your monitor's resolution, which needs far less
+from the GPU. If the FPS still drop with everything off, the limit is usually the CPU (the game's own logic): press
+F12 there and post the report, saying where you were.
 
 ## Please read: shaders and the cache
 
@@ -306,17 +368,19 @@ visual glitch, say whether any effect or ReShade was active (the F12 report reco
 Every release is scanned with VirusTotal, and the public reports are linked in its release notes. Windows SmartScreen
 may also warn you, because the executable is not signed and each release is a new file.
 
-**v0.1.6:** 1 of the 70 engines that analysed `Corruption_3 PC.exe` flags it: **Trapmine**, with the label
-`malicious.moderate.ml.score`. The other 69, including Kaspersky, Bitdefender, Malwarebytes, Microsoft and ESET, report
-nothing. I consider it a false positive, although a scan alone cannot prove that. These are my reasons:
+**v0.1.7:** none of the 61 to 66 engines flags any of the four downloads (both Windows zips and both Linux archives),
+and none of the 54 that analysed the Linux executable flags it. On Windows, 1 of the 69 engines that analysed
+`Corruption_3 PC.exe` and `Corruption_3 Trilogy Menu.exe` flags each of them: **Trapmine**, with the label
+`suspicious.low.ml.score`, its lowest level. The other 68, including Kaspersky, Bitdefender, Malwarebytes, Microsoft and
+ESET, report nothing. I consider it a false positive, although a scan alone cannot prove that. These are my reasons:
 
 - **It is a machine-learning score, not a malware signature.** The label names no malware family and no behaviour.
   Trapmine does not publish what triggers it.
-- **Trapmine has flagged this port before.** Versions before v0.1.5 got this same label and v0.1.5 got
-  `suspicious.low`, so the score went back up in this release. In [this r/antivirus thread](https://www.reddit.com/r/antivirus/comments/15zfn7x/maliciousmoderatemlscore/)
+- **Trapmine has flagged this port before.** Versions before v0.1.5 and v0.1.6 got `malicious.moderate.ml.score`,
+  v0.1.5 and now v0.1.7 the lower `suspicious.low`. In [this r/antivirus thread](https://www.reddit.com/r/antivirus/comments/15zfn7x/maliciousmoderatemlscore/)
   about the same label, a game developer reports that Trapmine flags their two games as well, and other users advise
   paying more attention when major vendors agree. Those are personal experiences, not an official verdict.
-- **The executable is the kind of file such a model may distrust.** It is about 157 MB, unsigned, seen by VirusTotal for the
+- **The executable is the kind of file such a model may distrust.** It is about 160 MB, unsigned, seen by VirusTotal for the
   first time on release day, and mostly PowerPC code machine-translated to x86-64. This is my best guess, not a confirmed
   cause.
 
@@ -335,7 +399,9 @@ post the name in [Discussions](../../discussions).
 - *F1 > Performance > "Expand draws on the decoder thread"* is off by default. Turning it on breaks the lava surface in
   Bryyo (seams between its patches when ripples appear), so leave it off.
 - A real Wii Remote cannot aim yet (no IR pointer), so it is not playable; use keyboard and mouse or a gamepad.
-- Only the USA disc (RM3E01, revision 0) is supported.
+- Only the USA discs are supported: *Metroid Prime 3: Corruption* (RM3E01, revision 0) and *Metroid Prime Trilogy*
+  (R3ME01), from which only Metroid Prime 3 runs. Choosing Metroid Prime or Metroid Prime 2 in the Trilogy menu shows
+  a notice and returns to the menu. RetroAchievements are not available with the Trilogy disc.
 
 ## Legal
 
